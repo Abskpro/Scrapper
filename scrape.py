@@ -6,12 +6,13 @@ from urllib.request import urlopen as uReq
 import pymongo
 
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017")
+link = input("Enter a link:")
+myclient = pymongo.MongoClient("mongodb+srv://absk2:yl9iVpqA2BYRieyH@cluster0.6eycv.mongodb.net/project?retryWrites=true&w=majority")
 
-mydb = myclient["uploads"]
-mycol = mydb["uploads.files"]
+mydb = myclient["project"]
+mycol = mydb["houses"]
 
-page_url = "https://www.gharbazar.com/property/details/house-at-narayantar-8503"
+page_url = link
 
 uClient = uReq(page_url)
 
@@ -21,15 +22,23 @@ uClient.close()
 
 
 description = page_soup.find("div",{"class":"property-page__detail-content"}).find("p").get_text()
+
 title = page_soup.find("div",{"class":"property-page__information"}).find("h1").findAll("span")[0].get_text()
+
 details = page_soup.find("div",{"class":"detail-area"}).find("ul").findAll("li")
+
 facilities = page_soup.find("ul",{"class":"checklist"}).findAll("li")
+
 number = int(page_soup.find("a",{"class":"contact-phones"}).get_text())
+
 name = page_soup.find("div",{"class":"owner-detail"}).find("ul").find("li").find("strong").get_text()
+
 price = page_soup.find("div",{"class":"amount"}).find("h2").get_text()
 
 default_detail = ["beds","kitchen","living","Bathrooms", "Floors", "price"]
+
 facilities_arr = []
+
 detail_dic = {}
 price = ''.join(re.findall(r'\d+',price))
 des = ' '.join(str(description).split())
