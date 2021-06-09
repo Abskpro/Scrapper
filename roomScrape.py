@@ -10,7 +10,7 @@ import pymongo
 
 
 link = input("Enter a link:")
-myclient = pymongo.MongoClient("mongodb+srv://absk2:yl9iVpqA2BYRieyH@cluster0.6eycv.mongodb.net/project?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("your mongodb uri")
 
 
 mydb = myclient["project"]
